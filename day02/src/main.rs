@@ -1,9 +1,8 @@
-fn get_score_part1(line : &str) -> u32 {
-    if line.is_empty() {
-        return 0;
-    }
+// Copyright (c) 2022, Kis Imre. All rights reserved.
+// SPDX-License-Identifier: MIT
 
-    let splitted : Vec<&str> = line.split_whitespace().collect();
+fn get_score_part1(line: &str) -> u32 {
+    let splitted: Vec<&str> = line.split_whitespace().collect();
     match (splitted[0], splitted[1]) {
         ("A", "X") => 1 + 3,
         ("A", "Y") => 2 + 6,
@@ -14,16 +13,12 @@ fn get_score_part1(line : &str) -> u32 {
         ("C", "X") => 1 + 6,
         ("C", "Y") => 2 + 0,
         ("C", "Z") => 3 + 3,
-        _ => panic!("Invalid input {:?}", splitted)
+        _ => panic!("Invalid input {:?}", splitted),
     }
 }
 
-fn get_score_part2(line : &str) -> u32 {
-    if line.is_empty() {
-        return 0;
-    }
-
-    let splitted : Vec<&str> = line.split_whitespace().collect();
+fn get_score_part2(line: &str) -> u32 {
+    let splitted: Vec<&str> = line.split_whitespace().collect();
     match (splitted[0], splitted[1]) {
         ("A", "X") => 0 + 3,
         ("A", "Y") => 3 + 1,
@@ -34,16 +29,31 @@ fn get_score_part2(line : &str) -> u32 {
         ("C", "X") => 0 + 2,
         ("C", "Y") => 3 + 3,
         ("C", "Z") => 6 + 1,
-        _ => panic!("Invalid input {:?}", splitted)
+        _ => panic!("Invalid input {:?}", splitted),
     }
 }
 
+fn part12(input: &str) -> (u32, u32) {
+    (
+        input
+            .split("\n")
+            .filter(|line| !line.is_empty())
+            .map(get_score_part1)
+            .sum(),
+        input
+            .split("\n")
+            .filter(|line| !line.is_empty())
+            .map(get_score_part2)
+            .sum(),
+    )
+}
+
 fn main() {
-    let input = include_str!("input");
+    assert_eq!((15, 12), part12(include_str!("input_test")));
 
-    let score : u32 = input.split("\n").map(get_score_part1).sum();
-    println!("Part 1: {}", score);
+    let (part1, part2) = part12(include_str!("input"));
 
-    let score2 : u32 = input.split("\n").map(get_score_part2).sum();
-    println!("Part 2: {}", score2);
+    println!("Day 02");
+    println!("Part 1: {}", part1);
+    println!("Part 2: {}", part2);
 }
